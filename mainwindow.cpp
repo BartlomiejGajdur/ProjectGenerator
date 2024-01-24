@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QFileDialog>
+#include <QDir>
+#include <QMessageBox>
 
 MainWindow::MainWindow(AppState& appState, QWidget *parent)
     : QMainWindow(parent)
@@ -62,10 +64,42 @@ void MainWindow::on_ClangFormatFile_clicked(bool checked)
     qDebug() <<"ClangFormat: " << checked;
 }
 
+void MainWindow::validateDirectoryPath(){
+	if(ui->ProjectNameLineEdit->text().isEmpty())
+		return;
 
-void MainWindow::on_pushButton_clicked()
-{
-    m_appState.generateFiles();
+		QString directoryPath = m_appState.getFilePath() + "/" + ui->ProjectNameLineEdit->text();
+
+		if (!QDir(directoryPath).exists())
+		{
+			if (!QDir().mkdir(directoryPath))
+			{
+				throw std::runtime_error("Nie udało się utworzyć katalogu.");
+			}
+		}
+		else
+		{
+			throw std::runtime_error("Katalog już istnieje.");
+		}
+
+		m_appState.setFilePath(directoryPath);
+}
+
+
+
+void MainWindow::on_pushButton_clicked(){
+
+	try{
+
+		validateDirectoryPath();
+		m_appState.generateFiles();
+
+	}catch(const std::runtime_error& e)
+	{
+		QMessageBox::warning(nullptr, "Błąd", e.what());
+	}
+
+
 }
 
 

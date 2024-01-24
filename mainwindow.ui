@@ -40,6 +40,16 @@
      </layout>
     </item>
     <item>
+     <widget class="QLineEdit" name="ProjectNameLineEdit">
+      <property name="placeholderText">
+       <string>Project name</string>
+      </property>
+      <property name="clearButtonEnabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QCheckBox" name="MainFIle">
       <property name="text">
        <string>Main</string>

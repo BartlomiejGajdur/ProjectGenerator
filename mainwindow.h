@@ -35,6 +35,7 @@ private slots:
     void on_ConanLibraryComboBox_currentIndexChanged(int index);
 
 private:
+	void validateDirectoryPath();
     Ui::MainWindow *ui;
     AppState m_appState;
 };
