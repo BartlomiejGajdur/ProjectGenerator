@@ -2,6 +2,7 @@
 #include <QFile>
 #include <QDebug>
 #include <QTextStream>
+#include <QMessageBox>
 
 AppState::AppState()
 {
@@ -18,14 +19,12 @@ void AppState::generateFiles()
         generateRunnerFile();
         generateClangFormatFile();
     }
-    catch (const QString& errMsg)
-    {
-        qDebug() << "Error during file generation: " << errMsg;
-        // Obsługa błędu, na przykład wyświetlenie komunikatu dla użytkownika
-    }
+	catch (const std::runtime_error& errMsg)
+	{
+		QMessageBox::warning(nullptr, "Błąd", errMsg.what());
+	}
 }
 
-// Funkcja pomocnicza do generowania pliku o podanej nazwie i zawartości
 void AppState::generateFile(const QString& fileName, const QString& content)
 {
     QString filePath = m_filePath + "/" + fileName;
@@ -37,8 +36,10 @@ void AppState::generateFile(const QString& fileName, const QString& content)
         file.close();
     }
     else
-    {
-        throw QString("Failed to create file: ") + fileName;
+	{
+		QString errorMsg{"Failed to create file: "};
+		errorMsg+= fileName;
+		throw std::runtime_error(errorMsg.toStdString());
     }
 }
 
@@ -46,11 +47,7 @@ void AppState::generateMainFile()
 {
     if (mainFile.generateFile)
     {
-        QString content = "int main() {\n"
-                          "    // Your code here\n"
-                          "}\n";
-        mainFile.fileName = "gej.cpp";
-        generateFile(mainFile.fileName, content);
+		generateFile(mainFile.fileName, mainFile.content);
     }
 }
 
@@ -69,9 +66,7 @@ void AppState::generateConanFile()
 {
     if (conanFile.generateFile)
     {
-        QString content = "[requires]\n"
-                          "// Your Conan requirements here\n";
-        generateFile(conanFile.fileName, content);
+		generateFile(conanFile.fileName, conanFile.content);
     }
 }
 

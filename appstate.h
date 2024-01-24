@@ -34,8 +34,15 @@ public:
     bool isGenerateClangFormat() const { return clangFormatFile.generateFile; }
     void setGenerateClangFormat(bool value) { clangFormatFile.generateFile = value; }
 
+	//Content setters
+	void setMainFileContent(const QString& contentToSet) { mainFile.setFileContent(contentToSet); }
+	void setCMakeFileContent(const QString& contentToSet) { cmakeFile.setFileContent(contentToSet); }
+	void setConanFileContent(const QString& contentToSet) { conanFile.setFileContent(contentToSet); }
+	void setRunnerFileContent(const QString& contentToSet) { runnerFile.setFileContent(contentToSet); }
+	void setClangFormatFileContent(const QString& contentToSet) { clangFormatFile.setFileContent(contentToSet); }
 
-    void generateFiles();
+
+	void generateFiles();
 
 private:
     QString m_filePath{};

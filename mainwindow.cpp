@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "contentCreatorHelper.h"
+
 #include <QFileDialog>
 #include <QDir>
 #include <QMessageBox>
@@ -85,26 +87,41 @@ void MainWindow::validateDirectoryPath(){
 		m_appState.setFilePath(directoryPath);
 }
 
-
-
 void MainWindow::on_pushButton_clicked(){
 
 	try{
-
 		validateDirectoryPath();
 		m_appState.generateFiles();
-
 	}catch(const std::runtime_error& e)
 	{
 		QMessageBox::warning(nullptr, "Błąd", e.what());
 	}
-
-
 }
-
 
 void MainWindow::on_ConanLibraryComboBox_currentIndexChanged(int index)
 {
+	if(index == 1)
+	{
+		QString requires{"fmt/10.2.1"};
+		m_appState.setConanFileContent(contentCreator::conanFileCreator(requires));
+
+		std::pair<QString, QString> libraryContent{
+			"#include <fmt/chrono.h>\n",
+			R"(
+			auto now = std::chrono::system_clock::now();
+			fmt::print("Date and time: {}\\n", now);
+			fmt::print("Time: {:%H:%M}\\n", now);
+			)"
+		};
+		m_appState.setMainFileContent(contentCreator::mainFileCreator(libraryContent));
+
+		//Tu jeszcze do CMAKE trzeba dorzucic do kompilacji
+	}
+
+	if(index == 2)
+	{
+
+	}
     qDebug()<<"Current Index: "<< index;
 }
 

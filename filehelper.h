@@ -3,6 +3,8 @@
 
 #include <QString>
 
+#include "contentCreatorHelper.h"
+
 struct GenerateFile {
     QString fileName;
     bool generateFile;
@@ -14,8 +16,7 @@ struct GenerateFile {
 
 struct MainFile : public GenerateFile {
     MainFile() : GenerateFile("main.cpp") {}
-    QString includes{"include <iostream>\n"};
-
+	QString content{contentCreator::mainFileCreator()};
 };
 
 struct CMakeFile : public GenerateFile {
@@ -26,7 +27,7 @@ struct CMakeFile : public GenerateFile {
 
 struct ConanFile : public GenerateFile {
     ConanFile() : GenerateFile("conanfile.txt") {}
-    QString dependencies{};
+	QString content{contentCreator::conanFileCreator()};
 };
 
 struct RunnerFile : public GenerateFile {

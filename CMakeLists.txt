@@ -19,6 +19,8 @@ set(PROJECT_SOURCES
         mainwindow.ui
         appstate.h appstate.cpp
         filehelper.h filehelper.cpp
+        contentCreatorHelper.h
+        contentCreatorHelper.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
