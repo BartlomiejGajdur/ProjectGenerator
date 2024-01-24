@@ -32,6 +32,8 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_ConanLibraryComboBox_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
     AppState m_appState;

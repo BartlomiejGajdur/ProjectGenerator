@@ -68,3 +68,9 @@ void MainWindow::on_pushButton_clicked()
     m_appState.generateFiles();
 }
 
+
+void MainWindow::on_ConanLibraryComboBox_currentIndexChanged(int index)
+{
+    qDebug()<<"Current Index: "<< index;
+}
+

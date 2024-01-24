@@ -54,11 +54,34 @@
      </widget>
     </item>
     <item>
-     <widget class="QCheckBox" name="ConanFile">
-      <property name="text">
-       <string>Conan</string>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QCheckBox" name="ConanFile">
+        <property name="text">
+         <string>Conan</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="ConanLibraryComboBox">
+        <item>
+         <property name="text">
+          <string/>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>fmt</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>nlohmann_json</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <widget class="QCheckBox" name="RunnerFile">
