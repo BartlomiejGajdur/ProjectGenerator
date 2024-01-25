@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>215</width>
-    <height>270</height>
+    <height>291</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -74,11 +74,6 @@
       </item>
       <item>
        <widget class="QComboBox" name="ConanLibraryComboBox">
-        <item>
-         <property name="text">
-          <string/>
-         </property>
-        </item>
         <item>
          <property name="text">
           <string>fmt</string>

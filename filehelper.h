@@ -6,38 +6,47 @@
 #include "contentCreatorHelper.h"
 
 struct GenerateFile {
-    QString fileName;
+	QString fileName{};
+	QString content{};
     bool generateFile;
 
     GenerateFile(const QString& defaultFileName, bool shouldGenerate = false)
         : fileName(defaultFileName), generateFile(shouldGenerate) {}
-
 };
 
 struct MainFile : public GenerateFile {
-    MainFile() : GenerateFile("main.cpp") {}
-	QString content{contentCreator::mainFileCreator()};
+	MainFile() : GenerateFile("main.cpp")
+	{
+		content = contentCreator::mainFileCreator();
+	}
 };
 
 struct CMakeFile : public GenerateFile {
-    CMakeFile() : GenerateFile("CMakeLists.txt") {}
-    QString projectName{};
-    QString dependencies{}; //Jakies zliby nlohmany fmt itd...
+	CMakeFile() : GenerateFile("CMakeLists.txt")
+	{
+		content = contentCreator::cmakeFileCreator();
+	}
 };
 
 struct ConanFile : public GenerateFile {
-    ConanFile() : GenerateFile("conanfile.txt") {}
-	QString content{contentCreator::conanFileCreator()};
+	ConanFile() : GenerateFile("conanfile.txt")
+	{
+		content = contentCreator::conanFileCreator();
+	}
 };
 
 struct RunnerFile : public GenerateFile {
-    RunnerFile() : GenerateFile("runner_windows.bat") {}
-    //Tutaj chyba nie potrzeba za wiele
+	RunnerFile() : GenerateFile("runner_windows.bat")
+	{
+		content = contentCreator::runnerFileCreator();
+	}
 };
 
 struct ClangFormatFile : public GenerateFile {
-    ClangFormatFile() : GenerateFile(".clang-format") {}
-    //Tu też nic chyba
+	ClangFormatFile() : GenerateFile(".clang-format")
+	{
+		content = contentCreator::clangFormatFileCreator();
+	}
 };
 
 //----------------------------------------------------------

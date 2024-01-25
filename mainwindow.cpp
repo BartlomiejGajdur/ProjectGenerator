@@ -43,12 +43,24 @@ void MainWindow::on_MainFIle_clicked(bool checked)
 void MainWindow::on_CMakeFile_clicked(bool checked)
 {
     m_appState.setGenerateCMake(checked);
+	if(!checked)
+	{
+		m_appState.setGenerateConan(checked);
+		ui->ConanFile->setCheckState(Qt::CheckState::Unchecked);
+		qDebug() <<"Conan tez zmieniam: " << checked;
+	}
     qDebug() <<"CMake: " << checked;
 }
 
 void MainWindow::on_ConanFile_clicked(bool checked)
 {
     m_appState.setGenerateConan(checked);
+	if(checked)
+	{
+		m_appState.setGenerateCMake(checked);
+		ui->CMakeFile->setCheckState(Qt::CheckState::Checked);
+		qDebug() <<"CMake tez zmieniam: " << checked;
+	}
     qDebug() <<"Conan: " << checked;
 }
 
@@ -87,41 +99,51 @@ void MainWindow::validateDirectoryPath(){
 		m_appState.setFilePath(directoryPath);
 }
 
+void MainWindow::setContentFromConanLibraryComboBox(){
+	const int currentIndex{ui->ConanLibraryComboBox->currentIndex()};
+	if(currentIndex == 0)
+	{
+		const contentCreator::fmt fmt{};
+		m_appState.setConanFileContent(contentCreator::conanFileCreator(fmt.conanRequires));
+
+		m_appState.setMainFileContent(contentCreator::mainFileCreator(fmt.mainContent));
+
+		m_appState.setCMakeFileContent(contentCreator::cmakeFileCreator(fmt.cmakeContent));
+	}
+
+	if(currentIndex == 1)
+	{
+		const contentCreator::nlohmann_json nlohmann_json{};
+		m_appState.setConanFileContent(contentCreator::conanFileCreator(nlohmann_json.conanRequires));
+
+		m_appState.setMainFileContent(contentCreator::mainFileCreator(nlohmann_json.mainContent));
+
+		m_appState.setCMakeFileContent(contentCreator::cmakeFileCreator(nlohmann_json.cmakeContent));
+	}
+
+	qDebug()<<"Current Index: "<< currentIndex;
+}
+
 void MainWindow::on_pushButton_clicked(){
 
 	try{
+
 		validateDirectoryPath();
-		m_appState.generateFiles();
+
 	}catch(const std::runtime_error& e)
 	{
 		QMessageBox::warning(nullptr, "Błąd", e.what());
 	}
+
+	//----------------------
+	setContentFromConanLibraryComboBox();
+	m_appState.generateFiles();
+	//----------------------
 }
 
 void MainWindow::on_ConanLibraryComboBox_currentIndexChanged(int index)
 {
-	if(index == 1)
-	{
-		QString requires{"fmt/10.2.1"};
-		m_appState.setConanFileContent(contentCreator::conanFileCreator(requires));
-
-		std::pair<QString, QString> libraryContent{
-			"#include <fmt/chrono.h>\n",
-			R"(
-			auto now = std::chrono::system_clock::now();
-			fmt::print("Date and time: {}\\n", now);
-			fmt::print("Time: {:%H:%M}\\n", now);
-			)"
-		};
-		m_appState.setMainFileContent(contentCreator::mainFileCreator(libraryContent));
-
-		//Tu jeszcze do CMAKE trzeba dorzucic do kompilacji
-	}
-
-	if(index == 2)
-	{
-
-	}
-    qDebug()<<"Current Index: "<< index;
+	qDebug()<<"[CHANGED] Current Index: "<< index;
 }
+
 

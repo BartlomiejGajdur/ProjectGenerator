@@ -55,10 +55,7 @@ void AppState::generateCmakeFile()
 {
     if (cmakeFile.generateFile)
     {
-        QString content = "cmake_minimum_required(VERSION 3.0)\n"
-                          "project(MyProject)\n"
-                          "// Your CMake configuration here\n";
-        generateFile(cmakeFile.fileName, content);
+		generateFile(cmakeFile.fileName, cmakeFile.content);
     }
 }
 
@@ -74,9 +71,7 @@ void AppState::generateRunnerFile()
 {
     if (runnerFile.generateFile)
     {
-        QString content = "@echo on\n"
-                          "pause // Your runner script here\n";
-        generateFile(runnerFile.fileName, content);
+		generateFile(runnerFile.fileName, runnerFile.content);
     }
 }
 
@@ -84,9 +79,6 @@ void AppState::generateClangFormatFile()
 {
     if (clangFormatFile.generateFile)
     {
-        QString content = "Language: Cpp\n"
-                          "BasedOnStyle: Google\n"
-                          "// Your ClangFormat configuration here\n";
-        generateFile(clangFormatFile.fileName, content);
+		generateFile(clangFormatFile.fileName, clangFormatFile.content);
     }
 }

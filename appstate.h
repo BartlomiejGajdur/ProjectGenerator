@@ -35,11 +35,11 @@ public:
     void setGenerateClangFormat(bool value) { clangFormatFile.generateFile = value; }
 
 	//Content setters
-	void setMainFileContent(const QString& contentToSet) { mainFile.setFileContent(contentToSet); }
-	void setCMakeFileContent(const QString& contentToSet) { cmakeFile.setFileContent(contentToSet); }
-	void setConanFileContent(const QString& contentToSet) { conanFile.setFileContent(contentToSet); }
-	void setRunnerFileContent(const QString& contentToSet) { runnerFile.setFileContent(contentToSet); }
-	void setClangFormatFileContent(const QString& contentToSet) { clangFormatFile.setFileContent(contentToSet); }
+	void setMainFileContent(const QString& contentToSet) { mainFile.content = contentToSet; }
+	void setCMakeFileContent(const QString& contentToSet) { cmakeFile.content = contentToSet; }
+	void setConanFileContent(const QString& contentToSet) { conanFile.content = contentToSet; }
+	void setRunnerFileContent(const QString& contentToSet) { runnerFile.content = contentToSet; }
+	void setClangFormatFileContent(const QString& contentToSet) { clangFormatFile.content = contentToSet; }
 
 
 	void generateFiles();

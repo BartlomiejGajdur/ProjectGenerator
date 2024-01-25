@@ -3,8 +3,33 @@
 #include <QString>
 
 namespace contentCreator{
-QString mainFileCreator(const std::optional<std::pair<QString,QString>>& libraryContent ={});
+using libraryContent = std::pair<QString, QString>;
+
+QString mainFileCreator(const std::optional<libraryContent>& libraryContent ={});
 QString conanFileCreator(const std::optional<QString>& requires ={});
+QString runnerFileCreator(const std::optional<QString>& preset ={});
+QString cmakeFileCreator(const std::optional<QString>& libraryContent ={});
+QString clangFormatFileCreator();
+
+struct library{
+	virtual void fillData() = 0;
+
+	QString conanRequires;
+	QString cmakeContent;
+	libraryContent mainContent;
+};
+
+struct fmt : public library{
+	fmt(){fillData();}
+
+	void fillData() override;
+};
+
+struct nlohmann_json : public library{
+	nlohmann_json(){fillData();}
+
+	void fillData() override;
+};
 }
 
 #endif // CONTENTCREATORHELPER_H
