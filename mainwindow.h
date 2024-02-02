@@ -34,6 +34,8 @@ private slots:
 
     void on_ConanLibraryComboBox_currentIndexChanged(int index);
 
+	void on_GitignoreFile_clicked(bool checked);
+
 private:
 	void validateDirectoryPath();
 	void setContentFromConanLibraryComboBox();

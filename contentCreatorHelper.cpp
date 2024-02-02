@@ -1,7 +1,7 @@
 // contentCreatorHelper.cpp
 #include "contentCreatorHelper.h"
 
-
+#include <QDebug>
 
 namespace contentCreator {
 QString mainFileCreator(const std::optional<libraryContent>& content) {
@@ -37,29 +37,34 @@ QString conanFileCreator(const std::optional<QString>& requires){
 QString runnerFileCreator(const std::optional<QString>& preset){
 
 	QString presetToSet{"Unix Makefiles"};
+	//qDebug()<<preset.value();
 	if (preset.has_value())
 		presetToSet = preset.value();
 
 	return QString(R"(@ECHO ON
-	set BASEDIR=%~dp0
-	PUSHD %BASEDIR%
-	RMDIR /Q /S build
-	conan install . --output-folder=build --build=missing
-	cd build
-	cmake .. -G)") + " \"" + presetToSet + "\" " + R"(-DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=RELEASE
-	make
-	pause)";
+set BASEDIR=%~dp0
+PUSHD %BASEDIR%
+RMDIR /Q /S build
+conan install . --output-folder=build --build=missing
+cd build
+cmake .. -G)") + " \"" + presetToSet + "\" " + R"(-DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=RELEASE
+make
+
+echo If build is successful, start build/ProjectGenerator.exe
+
+pause
+)
+)";
 
 }
 
 QString cmakeFileCreator(const std::optional<QString>& libraryContent)
 {
 	QString cmakeContent{
-	R"(
-	cmake_minimum_required(VERSION 3.15)
-	project(compressor)
+	R"(cmake_minimum_required(VERSION 3.15)
+project(ProjectGenerator)
 
-	add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp)
 
 	)"
 	};
@@ -74,104 +79,58 @@ QString clangFormatFileCreator()
 {
 	QString clangFormatContent{
 R"(Language:        Cpp
-# BasedOnStyle:  WebKit
-AccessModifierOffset: -4
-AlignAfterOpenBracket: true
-AlignConsecutiveAssignments: true
-AlignConsecutiveDeclarations: false
-AlignEscapedNewlines: Left
-AlignOperands:   false
-AlignTrailingComments: true
-AllowAllParametersOfDeclarationOnNextLine: true
-AllowShortBlocksOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: Empty
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterDefinitionReturnType: None
-AlwaysBreakAfterReturnType: None
-AlwaysBreakBeforeMultilineStrings: false
-AlwaysBreakTemplateDeclarations: true
-BinPackArguments: false
-BinPackParameters: false
-BreakBeforeBraces: Allman
-BraceWrapping:
-  AfterClass:      true
-  AfterControlStatement: true
-  AfterEnum:       true
-  AfterFunction:   true
-  AfterNamespace:  true
-  AfterObjCDeclaration: true
-  AfterStruct:     true
-  AfterUnion:      false
-  AfterExternBlock: true
-  BeforeCatch:     true
-  BeforeElse:      true
-  IndentBraces:    false
-  SplitEmptyFunction: true
-  SplitEmptyRecord: true
-  SplitEmptyNamespace: true
-BreakBeforeBinaryOperators: All
-BreakBeforeInheritanceComma: false
-BreakBeforeTernaryOperators: false
-BreakConstructorInitializersBeforeComma: false
-BreakConstructorInitializers: BeforeColon
-BreakAfterJavaFieldAnnotations: false
-BreakStringLiterals: true
-ColumnLimit:     120
-CommentPragmas:  '^ IWYU pragma:'
-CompactNamespaces: false
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
-ConstructorInitializerIndentWidth: 4
-ContinuationIndentWidth: 4
-Cpp11BracedListStyle: false
-DerivePointerAlignment: false
-DisableFormat:   false
-ExperimentalAutoDetectBinPacking: false
-FixNamespaceComments: true
-IncludeIsMainRegex: '(Test)?$'
-IndentCaseLabels: false
-IndentPPDirectives: None
-IndentWidth:     4
-IndentWrappedFunctionNames: false
-JavaScriptQuotes: Leave
-JavaScriptWrapImports: true
-KeepEmptyLinesAtTheStartOfBlocks: true
-MacroBlockBegin: '^[A-Z_]+_(BEGIN|CONTINUE)[A-Z_]*$|^[A-Z_]*(BEGIN|CONTINUE)_[A-Z_]+$|^CPP_INTERFACE(_[1-9]+)?$|^glBegin'
-MacroBlockEnd:   '^[A-Z_]+_END[A-Z_]*$|^[A-Z_]*END_[A-Z_]+$|^CPP_INTERFACE_END$|^glEnd'
+BasedOnStyle: LLVM
+IndentWidth: 4
+UseTab: Never
 MaxEmptyLinesToKeep: 1
-NamespaceIndentation: None
-ObjCBlockIndentWidth: 4
-ObjCSpaceAfterProperty: true
-ObjCSpaceBeforeProtocolList: true
-PenaltyBreakAssignment: 2
-PenaltyBreakBeforeFirstCallParameter: 19
-PenaltyBreakComment: 300
-PenaltyBreakFirstLessLess: 120
-PenaltyBreakString: 1000
-PenaltyExcessCharacter: 1000000
-PenaltyReturnTypeOnItsOwnLine: 600
-PointerAlignment: Left
-ReflowComments:  true
-SortIncludes: false
-SpaceAfterCStyleCast: false
-SpaceAfterTemplateKeyword: false
-SpaceBeforeAssignmentOperators: true
-SpaceBeforeParens: Never
-SpaceInEmptyParentheses: false
-SpacesBeforeTrailingComments: 1
-SpacesInAngles:  true
-SpacesInContainerLiterals: true
-SpacesInCStyleCastParentheses: true
-SpacesInParentheses: true
-SpacesInSquareBrackets: true
-Standard:        Cpp11
-TabWidth:        4
-UseTab:          Always
+ColumnLimit: 80
 )"
 	};
 
 	return clangFormatContent;
+}
+
+QString gitignoreFormatFileCreator(){
+	QString gitignoreFormatContent{
+		R"(
+#build
+build
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+)"
+	};
+
+	return gitignoreFormatContent;
 }
 
 void fmt::fillData(){
@@ -210,5 +169,74 @@ nlohmann::json myJson = {
 	std::cout << myJson.dump(4) << std::endl;
 )";
 }
+
+void zlib::fillData(){
+	this->conanRequires = "zlib/1.3.1";
+	this->cmakeContent =
+		R"(
+	find_package(ZLIB REQUIRED)
+	target_link_libraries(${PROJECT_NAME} ZLIB::ZLIB)
+)";
+
+	this->mainContent.first = "#include <zlib.h>\n";
+	this->mainContent.second = R"(
+if (ZLIB_VERNUM >= 0x1280) {
+		std::cout << "Zlib is installed and the version is compatible." << std::endl;
+	} else {
+		std::cout << "Zlib is either not installed or the version is not compatible." << std::endl;
+	}
+)";
+
+}
+
+void sfml::fillData(){
+	this->conanRequires =
+R"(sfml/2.6.1
+freetype/2.13.2
+stb/cci.20230920
+flac/1.4.3
+openal-soft/1.22.2
+vorbis/1.3.7
+minimp3/cci.20211201
+)";
+
+	this->cmakeContent =
+		R"(
+# Wyszukaj i załaduj SFML
+find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
+
+# Dołącz katalogi nagłówkowe SFML
+target_include_directories(ProjectGenerator PRIVATE ${SFML_INCLUDE_DIRS})
+
+# Podłącz biblioteki SFML
+target_link_libraries(ProjectGenerator PRIVATE ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+)";
+
+	this->mainContent.first = "#include <SFML/Graphics.hpp>\n\n";
+	this->mainContent.second = R"(
+ // Utwórz okno SFML
+	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Example");
+
+	// Główna pętla programu
+	while (window.isOpen()) {
+		sf::Event event;
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed)
+				window.close();
+		}
+
+		// Wyczyszczenie okna
+		window.clear();
+
+		// Tu dodaj swoje elementy graficzne, animacje itp.
+
+		// Wyświetlenie zawartości okna
+		window.display();
+	}
+)";
+
+}
+
+
 
 } //contentCreator

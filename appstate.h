@@ -34,6 +34,10 @@ public:
     bool isGenerateClangFormat() const { return clangFormatFile.generateFile; }
     void setGenerateClangFormat(bool value) { clangFormatFile.generateFile = value; }
 
+	// Getter i Setter dla generateClangFormat
+	bool isGenerateGitignoreFormat() const { return gitignoreFile.generateFile; }
+	void setGenerateGitignoreFormat(bool value) { gitignoreFile.generateFile = value; }
+
 	//Content setters
 	void setMainFileContent(const QString& contentToSet) { mainFile.content = contentToSet; }
 	void setCMakeFileContent(const QString& contentToSet) { cmakeFile.content = contentToSet; }
@@ -52,6 +56,7 @@ private:
     ConanFile conanFile;
     RunnerFile runnerFile;
     ClangFormatFile clangFormatFile;
+	GitignoreFile gitignoreFile;
 
 private:
     void generateFile(const QString& fileName, const QString& content);
@@ -60,6 +65,7 @@ private:
     void generateConanFile();
     void generateRunnerFile();
     void generateClangFormatFile();
+	void generateGitignoreFile();
 };
 
 #endif // APPSTATE_H

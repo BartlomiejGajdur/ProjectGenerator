@@ -10,6 +10,7 @@ QString conanFileCreator(const std::optional<QString>& requires ={});
 QString runnerFileCreator(const std::optional<QString>& preset ={});
 QString cmakeFileCreator(const std::optional<QString>& libraryContent ={});
 QString clangFormatFileCreator();
+QString gitignoreFormatFileCreator();
 
 struct library{
 	virtual void fillData() = 0;
@@ -30,6 +31,19 @@ struct nlohmann_json : public library{
 
 	void fillData() override;
 };
+
+struct zlib : public library{
+	zlib(){fillData();}
+
+	void fillData() override;
+};
+
+struct sfml : public library{
+	sfml(){fillData();}
+
+	void fillData() override;
+};
+
 }
 
 #endif // CONTENTCREATORHELPER_H

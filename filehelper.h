@@ -49,6 +49,13 @@ struct ClangFormatFile : public GenerateFile {
 	}
 };
 
+struct GitignoreFile : public GenerateFile {
+	GitignoreFile() : GenerateFile(".gitignore")
+	{
+		content = contentCreator::gitignoreFormatFileCreator();
+	}
+};
+
 //----------------------------------------------------------
 
 #endif // FILEHELPER_H

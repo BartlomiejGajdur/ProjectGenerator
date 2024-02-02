@@ -18,10 +18,12 @@ void AppState::generateFiles()
         generateConanFile();
         generateRunnerFile();
         generateClangFormatFile();
+		generateGitignoreFile();
+
     }
 	catch (const std::runtime_error& errMsg)
 	{
-		QMessageBox::warning(nullptr, "Błąd", errMsg.what());
+		QMessageBox::warning(nullptr, "Error", errMsg.what());
 	}
 }
 
@@ -81,4 +83,12 @@ void AppState::generateClangFormatFile()
     {
 		generateFile(clangFormatFile.fileName, clangFormatFile.content);
     }
+}
+
+void AppState::generateGitignoreFile()
+{
+	if (gitignoreFile.generateFile)
+	{
+		generateFile(gitignoreFile.fileName, gitignoreFile.content);
+	}
 }

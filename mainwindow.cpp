@@ -121,6 +121,27 @@ void MainWindow::setContentFromConanLibraryComboBox(){
 		m_appState.setCMakeFileContent(contentCreator::cmakeFileCreator(nlohmann_json.cmakeContent));
 	}
 
+	if(currentIndex == 2)
+	{
+		const contentCreator::zlib zlib{};
+		m_appState.setConanFileContent(contentCreator::conanFileCreator(zlib.conanRequires));
+
+		m_appState.setMainFileContent(contentCreator::mainFileCreator(zlib.mainContent));
+
+		m_appState.setCMakeFileContent(contentCreator::cmakeFileCreator(zlib.cmakeContent));
+	}
+
+	if(currentIndex == 3)
+	{
+		const contentCreator::sfml sfml{};
+		m_appState.setConanFileContent(contentCreator::conanFileCreator(sfml.conanRequires));
+
+		m_appState.setMainFileContent(contentCreator::mainFileCreator(sfml.mainContent));
+
+		m_appState.setCMakeFileContent(contentCreator::cmakeFileCreator(sfml.cmakeContent));
+	}
+
+
 	qDebug()<<"Current Index: "<< currentIndex;
 }
 
@@ -136,8 +157,13 @@ void MainWindow::on_pushButton_clicked(){
 	}
 
 	//----------------------
+	const QString generatorUsed = ui->GeneratorLineEdit->text();
+	if(!generatorUsed.isEmpty())
+		m_appState.setRunnerFileContent(contentCreator::runnerFileCreator(ui->GeneratorLineEdit->text()));
+	//----------------------
 	setContentFromConanLibraryComboBox();
 	m_appState.generateFiles();
+	m_appState.setFilePath(ui->FilePath->text());
 	//----------------------
 }
 
@@ -146,4 +172,11 @@ void MainWindow::on_ConanLibraryComboBox_currentIndexChanged(int index)
 	qDebug()<<"[CHANGED] Current Index: "<< index;
 }
 
+
+
+void MainWindow::on_GitignoreFile_clicked(bool checked)
+{
+	m_appState.setGenerateGitignoreFormat(checked);
+	qDebug() <<"gitignore: " << checked;
+}
 

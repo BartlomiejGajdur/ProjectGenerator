@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>215</width>
-    <height>291</height>
+    <width>220</width>
+    <height>296</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -57,11 +57,22 @@
      </widget>
     </item>
     <item>
-     <widget class="QCheckBox" name="CMakeFile">
-      <property name="text">
-       <string>CMake</string>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QCheckBox" name="CMakeFile">
+        <property name="text">
+         <string>CMake</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="GeneratorLineEdit">
+        <property name="placeholderText">
+         <string>Gen. e.g Unix Makefiles</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -84,6 +95,16 @@
           <string>nlohmann_json</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>zlib</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>sfml</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>
@@ -103,6 +124,13 @@
      </widget>
     </item>
     <item>
+     <widget class="QCheckBox" name="GitignoreFile">
+      <property name="text">
+       <string>Gitignore</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="pushButton">
       <property name="text">
        <string>Generate</string>
@@ -117,7 +145,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>215</width>
+     <width>220</width>
      <height>21</height>
     </rect>
    </property>
