@@ -23,6 +23,7 @@ set(PROJECT_SOURCES
 	filehelper.cpp
         contentCreatorHelper.h
         contentCreatorHelper.cpp
+        resources.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

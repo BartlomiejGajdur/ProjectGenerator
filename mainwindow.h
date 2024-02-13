@@ -36,6 +36,8 @@ private slots:
 
 	void on_GitignoreFile_clicked(bool checked);
 
+	void on_helpButton_clicked();
+
 private:
 	void validateDirectoryPath();
 	void setContentFromConanLibraryComboBox();

@@ -5,13 +5,16 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QMessageBox>
-
+#include <QTextEdit>
+#include <QIcon>
 MainWindow::MainWindow(AppState& appState, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , m_appState(appState)
 {
     ui->setupUi(this);
+	QIcon icon{":/ProjectGenerator.jpg"};
+	this->setWindowIcon(icon);
 }
 
 MainWindow::~MainWindow()
@@ -178,5 +181,29 @@ void MainWindow::on_GitignoreFile_clicked(bool checked)
 {
 	m_appState.setGenerateGitignoreFormat(checked);
 	qDebug() <<"gitignore: " << checked;
+}
+
+
+void MainWindow::on_helpButton_clicked()
+{
+	QFile file(":/Help.md");
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+		throw std::runtime_error("Nie można otworzyć pliku Help.md");
+	}
+
+	QTextStream in(&file);
+	QString markdownText = in.readAll();
+
+	QTextEdit *textEdit = new QTextEdit();
+
+	textEdit->setMarkdown(markdownText);
+	textEdit->setWindowTitle("Help");
+	textEdit->setReadOnly(true);
+	textEdit->resize(600, 400);
+
+	QIcon icon{":/ProjectGenerator.jpg"};
+	textEdit->setWindowIcon(icon);
+
+	textEdit->show();
 }
 
