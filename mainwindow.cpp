@@ -152,13 +152,7 @@ void MainWindow::on_pushButton_clicked(){
 
 	try{
 
-		validateDirectoryPath();
-
-	}catch(const std::runtime_error& e)
-	{
-		QMessageBox::warning(nullptr, "Błąd", e.what());
-	}
-
+	validateDirectoryPath();
 	//----------------------
 	const QString generatorUsed = ui->GeneratorLineEdit->text();
 	if(!generatorUsed.isEmpty())
@@ -168,6 +162,14 @@ void MainWindow::on_pushButton_clicked(){
 	m_appState.generateFiles();
 	m_appState.setFilePath(ui->FilePath->text());
 	//----------------------
+	QMessageBox::information(nullptr, "Information", "Files generated correctly");
+	}catch(const std::runtime_error& e)
+	{
+		QMessageBox::warning(nullptr, "Błąd", e.what());
+	}
+
+
+
 }
 
 void MainWindow::on_ConanLibraryComboBox_currentIndexChanged(int index)

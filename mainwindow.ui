@@ -6,20 +6,35 @@
    <rect>
     <x>0</x>
     <y>0</y>
+<<<<<<< HEAD
     <width>351</width>
     <height>435</height>
+=======
+    <width>264</width>
+    <height>301</height>
+>>>>>>> 6b30556809882f6ef8fa51503c67328a4eef15d2
    </rect>
   </property>
   <property name="minimumSize">
    <size>
+<<<<<<< HEAD
     <width>351</width>
     <height>435</height>
+=======
+    <width>264</width>
+    <height>301</height>
+>>>>>>> 6b30556809882f6ef8fa51503c67328a4eef15d2
    </size>
   </property>
   <property name="maximumSize">
    <size>
+<<<<<<< HEAD
     <width>351</width>
     <height>435</height>
+=======
+    <width>264</width>
+    <height>301</height>
+>>>>>>> 6b30556809882f6ef8fa51503c67328a4eef15d2
    </size>
   </property>
   <property name="windowTitle">
@@ -158,6 +173,20 @@
     </item>
    </layout>
   </widget>
+<<<<<<< HEAD
+=======
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>264</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+>>>>>>> 6b30556809882f6ef8fa51503c67328a4eef15d2
  </widget>
  <resources/>
  <connections/>
