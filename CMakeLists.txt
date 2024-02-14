@@ -20,7 +20,6 @@ set(PROJECT_SOURCES
         appstate.h 
 	appstate.cpp
         filehelper.h 
-	filehelper.cpp
         contentCreatorHelper.h
         contentCreatorHelper.cpp
         resources.qrc

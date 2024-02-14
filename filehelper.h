@@ -8,10 +8,10 @@
 struct GenerateFile {
 	QString fileName{};
 	QString content{};
-    bool generateFile;
+	bool generateFile;
 
-    GenerateFile(const QString& defaultFileName, bool shouldGenerate = false)
-        : fileName(defaultFileName), generateFile(shouldGenerate) {}
+	GenerateFile(const QString& defaultFileName, bool shouldGenerate = false)
+		: fileName(defaultFileName), generateFile(shouldGenerate) {}
 };
 
 struct MainFile : public GenerateFile {

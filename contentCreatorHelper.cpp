@@ -15,7 +15,7 @@ QString mainFileCreator(const std::optional<libraryContent>& content) {
 	}
 
 	QString endMainFunction
-	{R"(
+		{R"(
 
 std::cout << "Press Enter to exit...";
 getchar();
@@ -61,7 +61,7 @@ pause
 QString cmakeFileCreator(const std::optional<QString>& libraryContent)
 {
 	QString cmakeContent{
-	R"(cmake_minimum_required(VERSION 3.15)
+		R"(cmake_minimum_required(VERSION 3.15)
 project(ProjectGenerator)
 
 add_executable(${PROJECT_NAME} main.cpp)
@@ -78,7 +78,7 @@ add_executable(${PROJECT_NAME} main.cpp)
 QString clangFormatFileCreator()
 {
 	QString clangFormatContent{
-R"(Language:        Cpp
+		R"(Language:        Cpp
 BasedOnStyle: LLVM
 IndentWidth: 4
 UseTab: Never
@@ -136,7 +136,7 @@ build
 void fmt::fillData(){
 	this->conanRequires = "fmt/10.2.1";
 	this->cmakeContent =
-	R"(
+		R"(
 	find_package(fmt REQUIRED)
 	target_link_libraries(${PROJECT_NAME} fmt::fmt)
 	)";
@@ -191,7 +191,7 @@ if (ZLIB_VERNUM >= 0x1280) {
 
 void sfml::fillData(){
 	this->conanRequires =
-R"(sfml/2.6.1
+		R"(sfml/2.6.1
 freetype/2.13.2
 stb/cci.20230920
 flac/1.4.3
