@@ -177,6 +177,16 @@ void MainWindow::setContentFromConanLibraryComboBox(){
 		m_appState.setCMakeFileContent(contentCreator::cmakeFileCreator(sfml.cmakeContent));
 	}
 
+	if(currentIndex == 4)
+	{
+		const contentCreator::glfw glfw{};
+		m_appState.setConanFileContent(contentCreator::conanFileCreator(glfw.conanRequires));
+
+		m_appState.setMainFileContent(contentCreator::mainFileCreator(glfw.mainContent));
+
+		m_appState.setCMakeFileContent(contentCreator::cmakeFileCreator(glfw.cmakeContent));
+	}
+
 
 	qDebug()<<"Current Index: "<< currentIndex;
 }

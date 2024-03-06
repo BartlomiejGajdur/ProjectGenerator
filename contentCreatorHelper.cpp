@@ -237,6 +237,28 @@ target_link_libraries(ProjectGenerator PRIVATE ${SFML_LIBRARIES} ${SFML_DEPENDEN
 
 }
 
+void glfw::fillData()
+{
+	this->conanRequires = R"(opengl/system
+glfw/3.4
+)";
+	this->cmakeContent =
+		R"(
+find_package(glfw3 REQUIRED)
+target_link_libraries(${PROJECT_NAME} glfw)
+)";
+
+	this->mainContent.first = "#include <GLFW/glfw3.h>\n";
+	this->mainContent.second = R"(
+if (glfwGetVersionString() != nullptr) {
+		std::cout << "GLFW is installed and available." << std::endl;
+	} else {
+		std::cout << "GLFW is either not installed or not available." << std::endl;
+	}
+)";
+}
+
+
 
 
 } //contentCreator

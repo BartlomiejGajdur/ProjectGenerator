@@ -44,6 +44,12 @@ struct sfml : public library{
 	void fillData() override;
 };
 
+struct glfw : public library{
+	glfw(){fillData();}
+
+	void fillData() override;
+};
+
 }
 
 #endif // CONTENTCREATORHELPER_H
