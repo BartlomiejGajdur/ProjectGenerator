@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>Help.md</file>
-        <file>ProjectGenerator.jpg</file>
-    </qresource>
-</RCC>

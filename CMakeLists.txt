@@ -13,16 +13,20 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
-	main.cpp
-        mainwindow.ui
-	mainwindow.h     
-        mainwindow.cpp
-        appstate.h 
-	appstate.cpp
-        filehelper.h 
-        contentCreatorHelper.h
-        contentCreatorHelper.cpp
-        resources.qrc
+        src/main.cpp
+
+        include/mainwindow.ui
+        include/mainwindow.h
+        src/mainwindow.cpp
+
+        include/appstate.h
+        src/appstate.cpp
+
+        include/contentCreatorHelper.h
+        src/contentCreatorHelper.cpp
+
+        include/filehelper.h
+        res/resources.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
