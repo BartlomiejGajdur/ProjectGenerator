@@ -185,9 +185,9 @@ Format on save = true
 PPM -> Format Document With -> Clang-Format (default)
 ```
 
-Format wszystkich plików cpp/hpp/h
+Format wszystkich plików cpp/h
 ```
-clang-format -i --style=file *.cpp *.h *.hpp
+clang-format -i --style=file *.cpp *.h 
 ```
 
 <details>
