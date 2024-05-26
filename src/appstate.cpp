@@ -4,8 +4,6 @@
 #include <QTextStream>
 #include <QMessageBox>
 
-AppState::AppState() {}
-
 void AppState::generateFiles()
 {
 	try
@@ -25,7 +23,7 @@ void AppState::generateFiles()
 
 void AppState::generateFile( const QString& fileName, const QString& content )
 {
-	QString filePath = m_filePath + "/" + fileName;
+	const QString filePath = m_filePath + "/" + fileName;
 	QFile file( filePath );
 	if( file.open( QIODevice::WriteOnly | QIODevice::Text ) )
 	{
@@ -44,47 +42,35 @@ void AppState::generateFile( const QString& fileName, const QString& content )
 void AppState::generateMainFile()
 {
 	if( mainFile.generateFile )
-	{
 		generateFile( mainFile.fileName, mainFile.content );
-	}
 }
 
 void AppState::generateCmakeFile()
 {
 	if( cmakeFile.generateFile )
-	{
 		generateFile( cmakeFile.fileName, cmakeFile.content );
-	}
 }
 
 void AppState::generateConanFile()
 {
 	if( conanFile.generateFile )
-	{
 		generateFile( conanFile.fileName, conanFile.content );
-	}
 }
 
 void AppState::generateRunnerFile()
 {
 	if( runnerFile.generateFile )
-	{
 		generateFile( runnerFile.fileName, runnerFile.content );
-	}
 }
 
 void AppState::generateClangFormatFile()
 {
 	if( clangFormatFile.generateFile )
-	{
 		generateFile( clangFormatFile.fileName, clangFormatFile.content );
-	}
 }
 
 void AppState::generateGitignoreFile()
 {
 	if( gitignoreFile.generateFile )
-	{
 		generateFile( gitignoreFile.fileName, gitignoreFile.content );
-	}
 }

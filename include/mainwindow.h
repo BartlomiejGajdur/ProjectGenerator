@@ -38,8 +38,6 @@ private slots:
 
 	void on_pushButton_clicked();
 
-	void on_ConanLibraryComboBox_currentIndexChanged( int index );
-
 	void on_GitignoreFile_clicked( bool checked );
 
 	void on_helpButton_clicked();

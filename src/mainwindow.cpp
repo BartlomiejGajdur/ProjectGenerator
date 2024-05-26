@@ -56,26 +56,18 @@ void Ui::setApplicationStyle( QApplication& a )
 
 void MainWindow::on_toolButton_clicked()
 {
-	QString folderPath = QFileDialog::getExistingDirectory( this, tr( "Select Folder" ), "C://" );
+	const QString folderPath = QFileDialog::getExistingDirectory( this, tr( "Select Folder" ), "C://" );
 
 	if( !folderPath.isEmpty() )
 	{
-
 		ui->FilePath->setText( folderPath );
 		m_appState.setFilePath( folderPath );
-
-		qDebug() << "Selected folder path: " << folderPath;
-	}
-	else
-	{
-		qDebug() << "Operation canceled or no folder selected";
 	}
 }
 
 void MainWindow::on_MainFIle_clicked( bool checked )
 {
 	m_appState.setGenerateMain( checked );
-	qDebug() << "Main: " << checked;
 }
 
 void MainWindow::on_CMakeFile_clicked( bool checked )
@@ -85,9 +77,7 @@ void MainWindow::on_CMakeFile_clicked( bool checked )
 	{
 		m_appState.setGenerateConan( checked );
 		ui->ConanFile->setCheckState( Qt::CheckState::Unchecked );
-		qDebug() << "Conan tez zmieniam: " << checked;
 	}
-	qDebug() << "CMake: " << checked;
 }
 
 void MainWindow::on_ConanFile_clicked( bool checked )
@@ -97,41 +87,31 @@ void MainWindow::on_ConanFile_clicked( bool checked )
 	{
 		m_appState.setGenerateCMake( checked );
 		ui->CMakeFile->setCheckState( Qt::CheckState::Checked );
-		qDebug() << "CMake tez zmieniam: " << checked;
 	}
-	qDebug() << "Conan: " << checked;
 }
 
 void MainWindow::on_RunnerFile_clicked( bool checked )
 {
 	m_appState.setGenerateRunner( checked );
-	qDebug() << "Runner: " << checked;
 }
 
 void MainWindow::on_ClangFormatFile_clicked( bool checked )
 {
 	m_appState.setGenerateClangFormat( checked );
-	qDebug() << "ClangFormat: " << checked;
 }
 
 void MainWindow::validateDirectoryPath()
 {
 	if( ui->ProjectNameLineEdit->text().isEmpty() )
-		return;
+		throw std::runtime_error( "Project name cannot be empty" );
 
-	QString directoryPath = m_appState.getFilePath() + "/" + ui->ProjectNameLineEdit->text();
+	const QString directoryPath = m_appState.getFilePath() + "/" + ui->ProjectNameLineEdit->text();
 
-	if( !QDir( directoryPath ).exists() )
-	{
-		if( !QDir().mkdir( directoryPath ) )
-		{
-			throw std::runtime_error( "Nie udało się utworzyć katalogu." );
-		}
-	}
-	else
-	{
-		throw std::runtime_error( "Katalog już istnieje." );
-	}
+	if( QDir( directoryPath ).exists() )
+		throw std::runtime_error( "Directory already exists." );
+
+	if( !QDir().mkdir( directoryPath ) )
+		throw std::runtime_error( "Failed to create directory." );
 
 	m_appState.setFilePath( directoryPath );
 }
@@ -178,21 +158,18 @@ void MainWindow::setContentFromConanLibraryComboBox()
 
 		m_appState.setCMakeFileContent( contentCreator::cmakeFileCreator( sfml.cmakeContent ) );
 	}
-
-	qDebug() << "Current Index: " << currentIndex;
 }
 
 void MainWindow::on_pushButton_clicked()
 {
-
 	try
 	{
 
 		validateDirectoryPath();
 		//----------------------
 
-		QString generatorUsed = ui->GeneratorLineEdit->text();
-		std::optional< QString > generatorUsedOpt
+		const QString generatorUsed = ui->GeneratorLineEdit->text();
+		const std::optional< QString > generatorUsedOpt
 			= generatorUsed.isEmpty() ? std::nullopt : std::make_optional( generatorUsed );
 
 		m_appState.setRunnerFileContent( contentCreator::runnerFileCreator( generatorUsedOpt ) );
@@ -202,7 +179,12 @@ void MainWindow::on_pushButton_clicked()
 		m_appState.generateFiles();
 		m_appState.setFilePath( ui->FilePath->text() );
 		//----------------------
-		QMessageBox::information( nullptr, "Information", "Files generated correctly" );
+		QMessageBox msgBox;
+		msgBox.setIcon( QMessageBox::Information );
+		msgBox.setWindowTitle( "Information" );
+		msgBox.setText( "Files generated correctly" );
+		msgBox.setWindowIcon( QIcon{ ":/ProjectGenerator.jpg" } );
+		msgBox.exec();
 	}
 	catch( const std::runtime_error& e )
 	{
@@ -210,24 +192,16 @@ void MainWindow::on_pushButton_clicked()
 	}
 }
 
-void MainWindow::on_ConanLibraryComboBox_currentIndexChanged( int index )
-{
-	qDebug() << "[CHANGED] Current Index: " << index;
-}
-
 void MainWindow::on_GitignoreFile_clicked( bool checked )
 {
 	m_appState.setGenerateGitignoreFormat( checked );
-	qDebug() << "gitignore: " << checked;
 }
 
 void MainWindow::on_helpButton_clicked()
 {
 	QFile file( ":/Help.md" );
 	if( !file.open( QIODevice::ReadOnly | QIODevice::Text ) )
-	{
 		throw std::runtime_error( "Nie można otworzyć pliku Help.md" );
-	}
 
 	QTextStream in( &file );
 	QString markdownText = in.readAll();

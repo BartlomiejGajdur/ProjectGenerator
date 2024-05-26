@@ -8,7 +8,6 @@
 class AppState
 {
 public:
-	AppState();
 
 	//--------------------
 	void setFilePath( const QString& filePath )
